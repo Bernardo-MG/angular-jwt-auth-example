@@ -43,11 +43,7 @@ export class AuthenticationService {
     if (status) {
       loggedUser.username = status.username;
       loggedUser.logged = status.logged;
-
-      if (loggedUser.logged) {
-        const token = window.btoa(username + ':' + password);
-        loggedUser.token = token;
-      }
+      loggedUser.token = status.token;
     }
 
     this.user = loggedUser;
