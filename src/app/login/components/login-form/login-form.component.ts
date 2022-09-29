@@ -11,8 +11,6 @@ export class LoginFormComponent {
 
   @Input() public loading = false;
 
-  @Input() public failed = false;
-
   @Output() public login = new EventEmitter<LoginUser>();
 
   public form = this.formBuilder.group({
