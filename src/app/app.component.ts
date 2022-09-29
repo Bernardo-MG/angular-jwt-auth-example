@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MenuLink } from './navigation/model/menu-link';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
-  title = 'angular-jwt-auth-example';
+  title = 'angular-http-basic-auth-example';
+
+  links: MenuLink[] = [{ name: 'login', path: '/login' },{ name: 'data', path: '/data' }];
+
 }
