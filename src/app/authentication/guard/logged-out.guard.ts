@@ -6,9 +6,9 @@ import { AuthenticationService } from '../service/authentication.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticatedGuard implements CanActivate {
+export class LoggedOutGuard implements CanActivate {
 
-  private loginUrl = '/login';
+  private homeUrl = '/';
 
   constructor(
     private router: Router,
@@ -23,12 +23,12 @@ export class AuthenticatedGuard implements CanActivate {
 
     if (logged) {
       // Logged in
-      active = true;
+      // Redirect to home
+      active = false;
+      this.router.navigate([this.homeUrl]);
     } else {
       // Not logged in
-      // Redirect to login
-      this.router.navigate([this.loginUrl], { queryParams: { returnUrl: state.url } });
-      active = false;
+      active = true;
     }
 
     return active;
