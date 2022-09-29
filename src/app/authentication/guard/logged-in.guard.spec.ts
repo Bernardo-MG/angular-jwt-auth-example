@@ -1,10 +1,10 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticatedGuard } from './authenticated.guard';
+import { LoggedInGuard } from './logged-in.guard';
 
-describe('AuthenticatedGuard', () => {
-  let guard: AuthenticatedGuard;
+describe('LoggedInGuard', () => {
+  let guard: LoggedInGuard;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -13,7 +13,7 @@ describe('AuthenticatedGuard', () => {
         RouterTestingModule
       ]
     });
-    guard = TestBed.inject(AuthenticatedGuard);
+    guard = TestBed.inject(LoggedInGuard);
   });
 
   it('should be created', () => {

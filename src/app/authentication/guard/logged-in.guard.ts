@@ -6,7 +6,7 @@ import { AuthenticationService } from '../service/authentication.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticatedGuard implements CanActivate {
+export class LoggedInGuard implements CanActivate {
 
   private loginUrl = '/login';
 
