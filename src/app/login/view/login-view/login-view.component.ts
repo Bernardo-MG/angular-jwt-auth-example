@@ -31,7 +31,6 @@ export class LoginViewComponent implements OnInit {
     this.authenticationService.login(login.username, login.password)
       .subscribe({
         next: user => {
-          console.log(user)
           this.failed = !user.logged;
           this.loading = false;
           if (user.logged) {
