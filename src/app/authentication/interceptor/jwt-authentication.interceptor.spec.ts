@@ -1,20 +1,20 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
-import { AuthenticationInterceptor } from './authentication.interceptor';
+import { JwtAuthenticationInterceptor } from './jwt-authentication.interceptor';
 
-describe('AuthenticationInterceptor', () => {
+describe('JwtAuthenticationInterceptor', () => {
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
       HttpClientTestingModule
     ],
     providers: [
-      AuthenticationInterceptor
+      JwtAuthenticationInterceptor
       ]
   }));
 
   it('should be created', () => {
-    const interceptor: AuthenticationInterceptor = TestBed.inject(AuthenticationInterceptor);
+    const interceptor: JwtAuthenticationInterceptor = TestBed.inject(JwtAuthenticationInterceptor);
     expect(interceptor).toBeTruthy();
   });
 });
