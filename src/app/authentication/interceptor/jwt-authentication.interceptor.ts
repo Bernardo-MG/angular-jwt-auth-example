@@ -19,14 +19,14 @@ export class JwtAuthenticationInterceptor implements HttpInterceptor {
     // Acquire the current user token
     const token = this.authenticationService.getUser().token;
 
-    if (token === null) {
-      // No token
-      // No changes to request
-      authReq = request;
-    } else {
+    if (token) {
       // Has token
       // It is added to the request
       authReq = request.clone({ headers: request.headers.set(this.tokenHeaderKey, `${this.tokenHeaderIdentifier} ${token}`) });
+    } else {
+      // No token
+      // No changes to request
+      authReq = request;
     }
 
     return next.handle(authReq);
