@@ -24,8 +24,4 @@ export class LogoutButtonComponent {
     this.router.navigate([this.loginUrl]);
   }
 
-  public isAbleToLogout(): boolean {
-    return this.authenticationService.getUser().logged;
-  }
-
 }

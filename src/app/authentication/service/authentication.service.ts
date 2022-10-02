@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiResponse } from '@app/api/model/api-response';
 import { environment } from '@environments/environment';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { LoginStatus } from '../model/login-status';
 import { User } from '../model/user';
@@ -14,17 +14,24 @@ export class AuthenticationService {
 
   private loginUrl = environment.apiUrl + "/login";
 
-  private user: User = new User();
-
   private userKey = 'user';
+
+  private userSubject: BehaviorSubject<User>;
+
+  private user: Observable<User>;
 
   constructor(
     private http: HttpClient
   ) {
     const localUser = localStorage.getItem(this.userKey);
     if (localUser) {
-      this.user = JSON.parse(localUser);
+      const readUser = JSON.parse(localUser);
+      this.userSubject = new BehaviorSubject<User>(readUser);
+    } else {
+      this.userSubject = new BehaviorSubject<User>(new User());
     }
+
+    this.user = this.userSubject.asObservable();
   }
 
   public login(username: string, password: string): Observable<User> {
@@ -34,10 +41,15 @@ export class AuthenticationService {
   }
 
   public logout() {
-    this.user = new User();
+    this.userSubject.next(new User());
+    localStorage.removeItem(this.userKey);
   }
 
   public getUser(): User {
+    return this.userSubject.value;
+  }
+
+  public getUserObservable(): Observable<User> {
     return this.user;
   }
 
@@ -57,8 +69,8 @@ export class AuthenticationService {
       }
     }
 
-    this.user = loggedUser;
-    return this.user;
+    this.userSubject.next(loggedUser);
+    return this.getUser();
   }
 
 }
