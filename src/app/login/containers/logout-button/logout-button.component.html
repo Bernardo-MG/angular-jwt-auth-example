@@ -1,1 +1,3 @@
-<button (click)="onLogout()" [disabled]="!isAbleToLogout()">Logout</button>
+<button (click)="onLogout()" [disabled]="!isAbleToLogout()" type="button" class="btn btn-default" aria-label="Logout">
+    <fa-icon [icon]="logoutIcon"></fa-icon>
+</button>

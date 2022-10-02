@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@app/authentication/service/authentication.service';
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'logout-button',
@@ -10,6 +11,8 @@ import { AuthenticationService } from '@app/authentication/service/authenticatio
 export class LogoutButtonComponent {
 
   private loginUrl = '/login';
+
+  public logoutIcon = faRightFromBracket;
 
   constructor(
     private authenticationService: AuthenticationService,
