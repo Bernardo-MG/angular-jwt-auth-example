@@ -1,5 +1,6 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '@environments/environment';
 import { Observable } from 'rxjs';
 import { AuthenticationService } from '../service/authentication.service';
 
@@ -18,16 +19,26 @@ export class JwtAuthenticationInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let authReq;
 
-    // Acquire the current user token
-    const token = this.authenticationService.getUser().token;
+    const isApiUrl = request.url.startsWith(environment.apiUrl);
 
-    if (token) {
-      // Has token
-      // It is added to the request
-      authReq = request.clone({ headers: request.headers.set(this.tokenHeaderKey, `${this.tokenHeaderIdentifier} ${token}`) });
+    if (isApiUrl) {
+      // It is a request to our API
+
+      // Acquire the current user token
+      const logged = this.authenticationService.getUser().logged;
+      const token = this.authenticationService.getUser().token;
+
+      if ((logged) && (token)) {
+        // Has token
+        // It is added to the request
+        authReq = request.clone({ headers: request.headers.set(this.tokenHeaderKey, `${this.tokenHeaderIdentifier} ${token}`) });
+      } else {
+        // No token
+        // No changes to request
+        authReq = request;
+      }
     } else {
-      // No token
-      // No changes to request
+      // External API
       authReq = request;
     }
 
