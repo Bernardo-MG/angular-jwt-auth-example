@@ -3,6 +3,10 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTr
 import { Observable } from 'rxjs';
 import { AuthenticationService } from '../service/authentication.service';
 
+/**
+ * Logged in guard. Allows access only if the user in session is logged in. Otherwise redirects
+ * to the login form.
+ */
 @Injectable({
   providedIn: 'root'
 })

@@ -3,6 +3,10 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTr
 import { Observable } from 'rxjs';
 import { AuthenticationService } from '../service/authentication.service';
 
+/**
+ * Logged out guard. Allows access only if the user in session is logged out. Otherwise redirects
+ * to the app root URL.
+ */
 @Injectable({
   providedIn: 'root'
 })

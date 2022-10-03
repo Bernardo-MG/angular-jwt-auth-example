@@ -1,8 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '@app/authentication/service/authentication.service';
-import { LoginUser } from '@app/login/model/login-user';
+import { LoginFormUser } from '@app/login/model/login-form-user';
 
+/**
+ * Login view component. Smart component for building the login UI. Wraps the login component.
+ * 
+ * ## Failure message
+ * 
+ * If the login request fails the failed field will be set to true. This will show the error
+ * message.
+ * 
+ * ## Return URL
+ * 
+ * If the URL contains the returnUrl property, then the client will be redirected to it on a 
+ * succesful login. This property should contain a route valid for the app. If no route is set
+ * then the app will be redirected to the root route.
+ * 
+ * This is done as the user may be redirected to the login at any point in the app.
+ */
 @Component({
   selector: 'login-view',
   templateUrl: './login-view.component.html',
@@ -10,11 +26,15 @@ import { LoginUser } from '@app/login/model/login-user';
 })
 export class LoginViewComponent implements OnInit {
 
-  public loading = false;
-
+  /**
+   * Failed login flag.
+   */
   public failed = false;
 
-  private returnUrl: string = '';
+  /**
+   * Return route. Used to redirect after login.
+   */
+  private returnRoute: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -24,22 +44,31 @@ export class LoginViewComponent implements OnInit {
 
   ngOnInit() {
     // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnRoute = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  public onLogin(login: LoginUser) {
+  public onLogin(login: LoginFormUser) {
+    // Activates remember me if needed
+    // Should be done first of all, or the user won't be stored
+    this.authenticationService.setRememberMe(login.rememberMe);
+
+    // Login request
     this.authenticationService.login(login.username, login.password)
       .subscribe({
         next: user => {
+          // Succesful request
+
+          // The failed flag may be set, if the user didn't log in succesfully
           this.failed = !user.logged;
-          this.loading = false;
-          if (user.logged) {
-            this.router.navigate([this.returnUrl]);
+          if (!this.failed) {
+            // No problem
+            // Redirects to the return route
+            this.router.navigate([this.returnRoute]);
           }
         },
         error: error => {
+          // Failed request
           this.failed = true;
-          this.loading = false;
         }
       });
   }

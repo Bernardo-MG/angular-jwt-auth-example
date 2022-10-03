@@ -1,7 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { LoginUser } from '@app/login/model/login-user';
+import { LoginFormUser } from '@app/login/model/login-form-user';
 
+/**
+ * Login form component. Dumb component for handling the form. Includes checkbox for the 'remember me' functionality.
+ */
 @Component({
   selector: 'login-form',
   templateUrl: './login-form.component.html',
@@ -9,13 +12,18 @@ import { LoginUser } from '@app/login/model/login-user';
 })
 export class LoginFormComponent {
 
-  @Input() public loading = false;
+  /**
+   * Login event. Sent when the user accepts the data in the form.
+   */
+  @Output() public login = new EventEmitter<LoginFormUser>();
 
-  @Output() public login = new EventEmitter<LoginUser>();
-
-  public form = this.formBuilder.group({
+  /**
+   * Form structure.
+   */
+  public form = this.formBuilder.nonNullable.group({
     username: ['', Validators.required],
-    password: ['', Validators.required]
+    password: ['', Validators.required],
+    rememberMe: [false, Validators.required]
   });
 
   constructor(
@@ -24,17 +32,29 @@ export class LoginFormComponent {
 
   public onLogin() {
     if (this.form.valid) {
-      if ((this.form.value.username) && (this.form.value.password)) {
-        const user = new LoginUser();
+      // Valid form, can send data
+      const user = new LoginFormUser();
+      if (this.form.value.username) {
         user.username = this.form.value.username;
-        user.password = this.form.value.password;
-
-        this.login.emit(user);
       }
+      if (this.form.value.password) {
+        user.password = this.form.value.password;
+      }
+      if (this.form.value.rememberMe) {
+        user.rememberMe = this.form.value.rememberMe;
+      }
+
+      this.login.emit(user);
     }
   }
 
-  public isFormInvalid(field: string): boolean {
+  /**
+   * Checks if the form field is invalid.
+   * 
+   * @param field field to check
+   * @returns true if the form is invalid, false otherwise
+   */
+  public isFieldInvalid(field: string): boolean {
     let invalid: boolean;
 
     if (this.form.invalid) {
@@ -49,10 +69,6 @@ export class LoginFormComponent {
     }
 
     return invalid;
-  }
-
-  public canLogin(): boolean {
-    return this.form.valid;
   }
 
 }

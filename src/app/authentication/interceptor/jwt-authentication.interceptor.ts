@@ -4,7 +4,10 @@ import { environment } from '@environments/environment';
 import { Observable } from 'rxjs';
 import { AuthenticationService } from '../service/authentication.service';
 
-
+/**
+ * JWT authentication interceptor. Adds the bearer authentication token to all request to
+ * API requests, as long as the user in session is correctly logged in.
+ */
 @Injectable()
 export class JwtAuthenticationInterceptor implements HttpInterceptor {
 

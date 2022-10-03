@@ -4,8 +4,11 @@ import { environment } from '@environments/environment';
 import { catchError, Observable, throwError } from 'rxjs';
 import { AuthenticationService } from '../service/authentication.service';
 
+/**
+ * Unauthorized error interceptor. Logs out the user in session on an authorization error.
+ */
 @Injectable()
-export class UnauthorizedInterceptor implements HttpInterceptor {
+export class UnauthorizedErrorInterceptor implements HttpInterceptor {
 
   constructor(
     private authenticationService: AuthenticationService
