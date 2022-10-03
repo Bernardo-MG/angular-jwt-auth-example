@@ -5,6 +5,7 @@ Example for setting up JWT authentication with Angular. It is prepared to be use
 ## Features
 
 - JWT Authentication
+- Remember me to keep logged in
 
 ## Usage
 
