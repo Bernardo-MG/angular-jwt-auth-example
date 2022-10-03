@@ -10,7 +10,7 @@ describe('JwtAuthenticationInterceptor', () => {
     ],
     providers: [
       JwtAuthenticationInterceptor
-      ]
+    ]
   }));
 
   it('should be created', () => {

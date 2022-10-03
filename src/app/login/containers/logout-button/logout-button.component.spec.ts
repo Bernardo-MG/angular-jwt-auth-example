@@ -43,17 +43,4 @@ describe('LogoutButtonComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should be disabled by default', () => {
-    const button = fixture.nativeElement.querySelector('button');
-    expect(button.disabled).toEqual(true);
-  });
-
-  it('if the user is logged the button is enabled', () => {
-    user.logged = true;
-    fixture.detectChanges();
-
-    const button = fixture.nativeElement.querySelector('button');
-    expect(button.disabled).toEqual(false);
-  });
-
 });
