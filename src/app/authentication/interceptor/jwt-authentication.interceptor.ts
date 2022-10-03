@@ -11,7 +11,9 @@ export class JwtAuthenticationInterceptor implements HttpInterceptor {
 
   private tokenHeaderIdentifier = 'Bearer'
 
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor(
+    private authenticationService: AuthenticationService
+  ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let authReq;

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { JwtAuthenticationInterceptor } from './interceptor/jwt-authentication.interceptor';
+import { UnauthorizedInterceptor } from './interceptor/unauthorized.interceptor';
 
 @NgModule({
   declarations: [],
@@ -9,7 +10,8 @@ import { JwtAuthenticationInterceptor } from './interceptor/jwt-authentication.i
     CommonModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtAuthenticationInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: JwtAuthenticationInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true }
   ]
 })
 export class AuthenticationModule { }
