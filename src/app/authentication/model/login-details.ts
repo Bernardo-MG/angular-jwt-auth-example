@@ -1,7 +1,7 @@
 /**
- * Application user. Part of the authentication model.
+ * User login details. Shows the status after a login attempt.
  */
-export class User {
+export class LoginDetails {
     /**
      * User username.
      */

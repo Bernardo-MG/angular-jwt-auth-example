@@ -4,8 +4,8 @@ import { ApiResponse } from '@app/api/model/api-response';
 import { environment } from '@environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { LoginStatus } from '../model/login-status';
-import { User } from '../model/user';
+import { LoginDetails } from '../model/login-details';
+import { LoginRequest } from '../model/login-request';
 
 /**
  * Authentication service. Handles login and logout operations.
@@ -31,9 +31,9 @@ export class AuthenticationService {
 
   private userKey = 'user';
 
-  private userSubject: BehaviorSubject<User>;
+  private userSubject: BehaviorSubject<LoginDetails>;
 
-  private user: Observable<User>;
+  private user: Observable<LoginDetails>;
 
   private rememberMe = false;
 
@@ -50,12 +50,11 @@ export class AuthenticationService {
    * 
    * If the 'remember me' option is active, the user will be stored in the local storage.
    * 
-   * @param username username for login
-   * @param password password for login
+   * @param request login request
    * @returns the user resulting from the login
    */
-  public login(username: string, password: string): Observable<User> {
-    return this.http.post<ApiResponse<LoginStatus>>(this.loginUrl, { username, password })
+   public login(request: LoginRequest): Observable<LoginDetails> {
+    return this.http.post<ApiResponse<LoginDetails>>(this.loginUrl, request)
       .pipe(map(response => response.content))
       .pipe(map(response => this.toUser(response)))
       .pipe(tap(user => this.storeUser(user)));
@@ -66,7 +65,7 @@ export class AuthenticationService {
    */
   public logout() {
     // Store empty user
-    this.userSubject.next(new User());
+    this.userSubject.next(new LoginDetails());
 
     // Clear local storage
     localStorage.removeItem(this.userKey);
@@ -76,7 +75,7 @@ export class AuthenticationService {
    * Returns the user currently in session.
    * @returns the user currently in session
    */
-  public getUser(): User {
+  public getUser(): LoginDetails {
     return this.userSubject.value;
   }
 
@@ -85,7 +84,7 @@ export class AuthenticationService {
    * 
    * @returns the user currently in session as an observable
    */
-  public getUserObservable(): Observable<User> {
+  public getUserObservable(): Observable<LoginDetails> {
     return this.user;
   }
 
@@ -104,19 +103,19 @@ export class AuthenticationService {
    * 
    * @returns the user stored in the local storage as part of the 'remember me'
    */
-  private readUserFromLocal(): BehaviorSubject<User> {
-    let subject: BehaviorSubject<User>;
+  private readUserFromLocal(): BehaviorSubject<LoginDetails> {
+    let subject: BehaviorSubject<LoginDetails>;
 
     // If the user was stored, load it
     const localUser = localStorage.getItem(this.userKey);
     if (localUser) {
       // User found in local storage
       const readUser = JSON.parse(localUser);
-      subject = new BehaviorSubject<User>(readUser);
+      subject = new BehaviorSubject<LoginDetails>(readUser);
     } else {
       // User not found
       // Use default user
-      subject = new BehaviorSubject<User>(new User());
+      subject = new BehaviorSubject<LoginDetails>(new LoginDetails());
     }
 
     return subject;
@@ -128,10 +127,10 @@ export class AuthenticationService {
    * @param status status to map
    * @returns user generated from the login status
    */
-  private toUser(status: LoginStatus): User {
+  private toUser(status: LoginDetails): LoginDetails {
     let loggedUser;
 
-    loggedUser = new User();
+    loggedUser = new LoginDetails();
     if (status) {
       // Received data
       loggedUser.username = status.username;
@@ -148,7 +147,7 @@ export class AuthenticationService {
    * 
    * @param user user to store
    */
-  private storeUser(user: User) {
+  private storeUser(user: LoginDetails) {
     this.userSubject.next(user);
 
     if (this.rememberMe) {

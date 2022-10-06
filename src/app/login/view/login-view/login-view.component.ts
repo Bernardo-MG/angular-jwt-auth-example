@@ -53,7 +53,7 @@ export class LoginViewComponent implements OnInit {
     this.authenticationService.setRememberMe(login.rememberMe);
 
     // Login request
-    this.authenticationService.login(login.username, login.password)
+    this.authenticationService.login(login)
       .subscribe({
         next: user => {
           // Succesful request

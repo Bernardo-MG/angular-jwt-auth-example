@@ -1,7 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { User } from '@app/authentication/model/user';
+import { LoginDetails } from '@app/authentication/model/login-details';
 import { AuthenticationService } from '@app/authentication/service/authentication.service';
 import { LogoutButtonComponent } from './logout-button.component';
 
@@ -9,13 +9,13 @@ describe('LogoutButtonComponent', () => {
   let component: LogoutButtonComponent;
   let fixture: ComponentFixture<LogoutButtonComponent>;
   let authenticationServiceStub: Partial<AuthenticationService>;
-  let user: User;
+  let user: LoginDetails;
 
   beforeEach(async () => {
-    user = new User();
+    user = new LoginDetails();
 
     authenticationServiceStub = {
-      getUser(): User {
+      getUser(): LoginDetails {
         return user;
       }
     };
