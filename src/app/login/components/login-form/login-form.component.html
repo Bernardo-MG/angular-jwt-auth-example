@@ -15,9 +15,9 @@
             Password is required
         </div>
     </div>
-    <div class="form-group">
-        <label for="rememberMe">Remember me</label>
+    <div class="form-check form-switch">
         <input type="checkbox" formControlName="rememberMe" class="form-check-input">
+        <label for="rememberMe" class="form-check-label">Remember me</label>
     </div>
     <button [disabled]="!this.form.valid" class="btn btn-primary" [attr.aria-disabled]="!this.form.valid" aria-label="Login">
         Login
