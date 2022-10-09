@@ -1,25 +1,15 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { LoginDetails } from '@app/authentication/model/login-details';
-import { AuthenticationService } from '@app/authentication/service/authentication.service';
+import { LoginService } from '@app/login/service/login.service';
 import { LogoutButtonComponent } from './logout-button.component';
 
 describe('LogoutButtonComponent', () => {
   let component: LogoutButtonComponent;
   let fixture: ComponentFixture<LogoutButtonComponent>;
-  let authenticationServiceStub: Partial<AuthenticationService>;
-  let user: LoginDetails;
+  let loginService: LoginService;
 
   beforeEach(async () => {
-    user = new LoginDetails();
-
-    authenticationServiceStub = {
-      getUser(): LoginDetails {
-        return user;
-      }
-    };
-
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
@@ -28,9 +18,13 @@ describe('LogoutButtonComponent', () => {
       declarations: [
         LogoutButtonComponent
       ],
-      providers: [{ provide: AuthenticationService, useValue: authenticationServiceStub }]
+      providers: [
+        LoginService
+      ]
     })
       .compileComponents();
+
+    loginService = TestBed.inject(LoginService);
   });
 
   beforeEach(() => {

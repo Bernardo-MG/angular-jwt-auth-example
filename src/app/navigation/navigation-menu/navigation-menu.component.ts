@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { AuthenticationService } from '@app/authentication/service/authentication.service';
+import { AuthenticationContainer } from '@app/authentication/service/authentication-container.service';
 import { MenuLink } from '../model/menu-link';
 
 @Component({
@@ -16,9 +16,9 @@ export class NavigationMenuComponent {
   public loggedIn: boolean = false;
 
   constructor(
-    private authenticationService: AuthenticationService
+    private authenticationContainer: AuthenticationContainer
   ) {
-    this.authenticationService.getUserObservable().subscribe(u => { this.loggedIn = u.logged });
+    this.authenticationContainer.getUserObservable().subscribe(u => { this.loggedIn = u.logged });
   }
 
 }

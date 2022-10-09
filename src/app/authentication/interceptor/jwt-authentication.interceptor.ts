@@ -2,6 +2,7 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { Observable } from 'rxjs';
+import { AuthenticationContainer } from '../service/authentication-container.service';
 import { AuthenticationService } from '../service/authentication.service';
 
 /**
@@ -16,7 +17,7 @@ export class JwtAuthenticationInterceptor implements HttpInterceptor {
   private tokenHeaderIdentifier = 'Bearer'
 
   constructor(
-    private authenticationService: AuthenticationService
+    private authenticationContainer: AuthenticationContainer
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -28,8 +29,8 @@ export class JwtAuthenticationInterceptor implements HttpInterceptor {
       // It is a request to our API
 
       // Acquire the current user token
-      const logged = this.authenticationService.getUser().logged;
-      const token = this.authenticationService.getUser().token;
+      const logged = this.authenticationContainer.getLoginDetails().logged;
+      const token = this.authenticationContainer.getLoginDetails().token;
 
       if ((logged) && (token)) {
         // Has token

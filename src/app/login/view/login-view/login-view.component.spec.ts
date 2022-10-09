@@ -1,12 +1,13 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-
+import { LoginService } from '@app/login/service/login.service';
 import { LoginViewComponent } from './login-view.component';
 
 describe('LoginViewComponent', () => {
   let component: LoginViewComponent;
   let fixture: ComponentFixture<LoginViewComponent>;
+  let loginService: LoginService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -16,9 +17,14 @@ describe('LoginViewComponent', () => {
       ],
       declarations: [
         LoginViewComponent
+      ],
+      providers: [
+        LoginService
       ]
     })
       .compileComponents();
+
+      loginService = TestBed.inject(LoginService);
   });
 
   beforeEach(() => {

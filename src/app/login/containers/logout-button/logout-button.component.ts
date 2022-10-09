@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '@app/authentication/service/authentication.service';
+import { LoginService } from '@app/login/service/login.service';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 /**
@@ -18,12 +18,12 @@ export class LogoutButtonComponent {
   public logoutIcon = faRightFromBracket;
 
   constructor(
-    private authenticationService: AuthenticationService,
+    private loginService: LoginService,
     private router: Router
   ) { }
 
   public onLogout() {
-    this.authenticationService.logout();
+    this.loginService.logout();
     this.router.navigate([this.loginUrl]);
   }
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthenticationService } from '@app/authentication/service/authentication.service';
 import { LoginFormUser } from '@app/login/model/login-form-user';
+import { LoginService } from '@app/login/service/login.service';
 
 /**
  * Login view component. Smart component for building the login UI. Wraps the login component.
@@ -39,7 +39,7 @@ export class LoginViewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private authenticationService: AuthenticationService
+    private loginService: LoginService
   ) { }
 
   ngOnInit() {
@@ -50,10 +50,10 @@ export class LoginViewComponent implements OnInit {
   public onLogin(login: LoginFormUser) {
     // Activates remember me if needed
     // Should be done first of all, or the user won't be stored
-    this.authenticationService.setRememberMe(login.rememberMe);
+    this.loginService.setRememberMe(login.rememberMe);
 
     // Login request
-    this.authenticationService.login(login)
+    this.loginService.login(login)
       .subscribe({
         next: user => {
           // Succesful request
