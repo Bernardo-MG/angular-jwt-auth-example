@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { environment } from '@environments/environment';
 import { Observable } from 'rxjs';
 import { AuthenticationContainer } from '../service/authentication-container.service';
-import { AuthenticationService } from '../service/authentication.service';
 
 /**
  * JWT authentication interceptor. Adds the bearer authentication token to all request to
