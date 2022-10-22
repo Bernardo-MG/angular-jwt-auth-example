@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ApiResponse } from '@app/api/model/api-response';
+import { ApiResponse } from '@app/api/models/api-response';
 import { LoginDetails } from '@app/authentication/model/login-details';
 import { LoginRequest } from '@app/authentication/model/login-request';
 import { AuthenticationContainer } from '@app/authentication/service/authentication-container.service';
