@@ -1,6 +1,20 @@
 {
   "name": "angular-jwt-auth-example",
-  "version": "1.0.0",
+  "version": "1.1.0",
+  "description": "Example using JWT authentication with Angular",
+  "author": "Bernardo Mart�nez Garrido",
+  "homepage": "https://github.com/Bernardo-MG/angular-jwt-auth-example",
+  "license": "MIT",
+  "keywords": [
+    "example", "JWT"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:bernardo-mg/angular-jwt-auth-example.git"
+  },
+  "bugs": {
+    "url": "https://www.github.com/bernardo-mg/angular-jwt-auth-example/issues"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
